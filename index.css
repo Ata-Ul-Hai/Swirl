@@ -1,0 +1,66 @@
+
+.Header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+.Logo{
+    width: 100px;
+}
+
+.Nav > ul {
+     display: flex;
+     list-style-type:none ;
+     padding: 0px 40px;
+     
+}
+
+.Nav > ul > li {
+    padding: 10px;
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.res-container{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.search{
+    padding: 10px;
+}
+
+.res-card{
+    width: 300px;
+    height: 600px;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 5px
+}
+
+.res-logo{
+    width: 100%;
+    height: 40%;
+}
+
+.res-card:hover{
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.shimmer-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shimmer-cards{
+    margin: 20px;
+    height: 400px;
+    width: 200px;
+    background-color: #f0f0f0;
+}

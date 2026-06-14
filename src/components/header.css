@@ -1,0 +1,26 @@
+
+.Header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+.Logo{
+    width: 100px;
+}
+
+.Nav > ul {
+     display: flex;
+     list-style-type:none ;
+     padding: 0px 40px;
+     
+}
+
+.Nav > ul > li {
+    padding: 10px;
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+}
