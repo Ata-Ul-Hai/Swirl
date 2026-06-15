@@ -13,7 +13,7 @@ function Body(){
         const fetchProducts = async () => {
             try {
 
-                const json = await axios.get("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING")
+                const json = await axios.get("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.8789386&lng=79.929197&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
 
 
                 console.log(json?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
@@ -30,7 +30,9 @@ function Body(){
     }, [])
     
     return products.length ===0? <Shimmer />: (
+
         <div className="body"> 
+
             <div className="search">
                 <input type="text" className='search-button' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
 
@@ -40,8 +42,8 @@ function Body(){
                     
                     setFilterProduct(filtered);
                 }}>Search</button>
-            
             </div>
+            
             
             <div className="res-container">
                 {filterProduct.map((product) => (

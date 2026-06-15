@@ -10,6 +10,7 @@ return(
         <h4>{resData.cuisines}</h4>
         <h4>{resData.costForTwo}</h4>
         <h4>{resData.avgRatingString}</h4>
+        <h4>{resData.locality}, {resData.areaName}</h4>
     </div>
 )
     
