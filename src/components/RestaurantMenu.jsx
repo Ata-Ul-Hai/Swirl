@@ -1,29 +1,12 @@
-import { useState ,useEffect } from "react"
-import axios from "axios"
+import useRestaurantMenu from "../utils/useRestaurantMenu"
 import Shimmer from "./Shimmer"
 import { useParams } from "react-router"
 
 const RestaurantMenu = () => {
 
-    const [menuArray, setMenuArray] = useState(null)
     const {resId} = useParams()
-
-    useEffect(() => {
-        async function fetchMenu(){
-            try {
-                const data = await axios.get(`https://corsproxy.io/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.8789386&lng=79.929197&restaurantId=${resId}`)
-
-                // this will show only recommended menu, for other need to parse the json better!
-                setMenuArray(data.data.data)
-                // console.log(menuArray);
-                
-            } catch (error) {
-                console.log(error);   
-            }
-        }
-        fetchMenu()
-        }, [resId])
-    
+    // Used custom hook
+    const menuArray = useRestaurantMenu(resId)
 
     if (menuArray === undefined || menuArray === '' || menuArray === null){
         return <>
