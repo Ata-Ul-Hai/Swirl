@@ -3,6 +3,7 @@ import RestaurantCard from "./Card"
 // import './body.css'
 import axios from 'axios'
 import Shimmer from './Shimmer'
+import { Link } from 'react-router'
 
 function Body(){
     const [products, setProducts] = useState([])
@@ -13,15 +14,16 @@ function Body(){
         const fetchProducts = async () => {
             try {
 
-                const json = await axios.get("https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.8789386&lng=79.929197&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+                const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.8789386&lng=79.929197&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
 
-
-                console.log(json?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                console.log(json.data.data);
                 
-                // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                console.log(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                
+                // console.log(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-                setProducts(json?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-                setFilterProduct(json?.data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setProducts(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setFilterProduct(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
             } catch (error) {
                 console.error("Error fetching products:", error)
             }
@@ -29,7 +31,7 @@ function Body(){
         fetchProducts()
     }, [])
     
-    return products.length ===0? <Shimmer />: (
+    return products?.length === 0 ? <Shimmer />: (
 
         <div className="body"> 
 
@@ -46,8 +48,8 @@ function Body(){
             
             
             <div className="res-container">
-                {filterProduct.map((product) => (
-                    <RestaurantCard key={product.info.id} resData = {product.info} />
+                {filterProduct?.map((product) => (
+                    <Link key={product.info.id} to={'/restaurants/'+product.info.id}> <RestaurantCard resData = {product.info} /> </Link>
                 ))}
             </div>
 

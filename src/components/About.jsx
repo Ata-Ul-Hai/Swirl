@@ -1,10 +1,23 @@
+import React from 'react'
+import User from './User'
+import Shimmer from './Shimmer'
 
-const About = () => {
-    return (
-        <>
-        <h1>Hello this is About section will developed soon wait till then!</h1>
-        </>
-    )
+class About extends React.Component{
+
+    constructor(props){
+        super(props)
+        // console.log('parent constructor');  
+    };
+
+    render(){
+        return(
+            <div>
+                <h1>This is About section</h1>
+                <User />
+            </div>
+        )
+    }
+
 }
 
 export default About

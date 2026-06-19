@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import App from './App.jsx'
-import Menu from './components/Menu.jsx'
+import RestaurantMenu from './components/RestaurantMenu.jsx'
 import Body from "./components/Body.jsx";
 import About from './components/About.jsx'
 import Contact from './components/Contact.jsx'
@@ -24,8 +24,8 @@ const router = createBrowserRouter([
       element: <About />
     },
     {
-      path: '/menu',
-      element: <Menu />
+      path: '/restaurants/:resId',
+      element: <RestaurantMenu />
     },
     {
       path: '/contact',
