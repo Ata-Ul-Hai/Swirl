@@ -18,12 +18,12 @@ function Body(){
 
                 console.log(json.data.data);
                 
-                console.log(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                console.log(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
                 
-                // console.log(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                // console.log(json?.data?.cards[]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-                setProducts(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-                setFilterProduct(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setProducts(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setFilterProduct(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
             } catch (error) {
                 console.error("Error fetching products:", error)
             }

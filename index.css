@@ -1,4 +1,6 @@
+@import "tailwindcss";
 
+/* 
 .Header{
     display: flex;
     justify-content: space-between;
@@ -29,7 +31,6 @@ a {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 25px;
-    /* flex-wrap: wrap;     */
 }
 
 .search{
@@ -76,4 +77,4 @@ a {
 .user-img{
     height: 200px;
     width: 200px;
-}
+} */
