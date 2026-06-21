@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import RestaurantCard from "./Card"  
+import RestaurantCard from "./RestaurantCard"  
 // import './body.css'
 import axios from 'axios'
 import Shimmer from './Shimmer'
@@ -18,12 +18,12 @@ function Body(){
 
                 console.log(json.data.data);
                 
-                console.log(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                console.log(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
                 
                 // console.log(json?.data?.cards[]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-                setProducts(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-                setFilterProduct(json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setProducts(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                setFilterProduct(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
             } catch (error) {
                 console.error("Error fetching products:", error)
             }
@@ -34,17 +34,32 @@ function Body(){
     return products?.length === 0 ? <Shimmer />: (
 
         <div className="body"> 
+            <div className='flex'>
+                <div className="search mx-4 p-4">
+                    <input type="text" className='border border-solid border-black' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
 
-            <div className="search mx-4 p-4">
-                <input type="text" className='border border-solid border-black' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
-
-                <button className='px-4 py-2 bg-green-100 m-4  rounded-lg' onClick={() => {
-                    const filtered = products.filter((res) => res.info.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                    // console.log(filtered);
-                    
-                    setFilterProduct(filtered);
-                }}>Search</button>
+                    <button className='px-4 py-2 bg-green-100 m-4  rounded-lg' onClick={() => {
+                        const filtered = products.filter((res) => res.info.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                        // console.log(filtered);
+                        
+                        setFilterProduct(filtered);
+                    }}>Search</button>
+                </div>
+                <div className="search m-4 p-4 flex items-center">
+                    <button
+                    className="px-4 py-2 bg-gray-100 rounded-lg"
+                    onClick={() => {
+                        const filteredList = products.filter(
+                        (res) => res.info.avgRating > 4
+                        );
+                        setFilterProduct(filteredList);
+                    }}
+                    >
+                    Top Rated Restaurants
+                    </button>
+                </div>  
             </div>
+
             
             
             <div className="flex flex-wrap">
