@@ -12,8 +12,11 @@ class About extends React.Component{
     render(){
         return(
             <div>
-                <h1>This is About section</h1>
-                <User />
+                <h1 className='text-2xl flex justify-center my-4 bg-red-100'>This is About section</h1>
+                <div className='flex flex-wrap justify-evenly gap-2'>
+                    <User />
+                </div>
+
             </div>
         )
     }

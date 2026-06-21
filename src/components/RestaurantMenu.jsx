@@ -10,7 +10,7 @@ const RestaurantMenu = () => {
 
     if (menuArray === undefined || menuArray === '' || menuArray === null){
         return <>
-        <h1 style={{marginLeft:'45vw'}}>Menu</h1>
+        <h1 className="flex justify-center">Menu</h1>
         <Shimmer/>
         </>
     } else {
@@ -18,7 +18,7 @@ const RestaurantMenu = () => {
         const itemCards = menuArray.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card.itemCards
 
         return(
-            <div className="menu">
+            <div className="">
                 <h1>{name}</h1>
                 <h3>{cuisines.join(',')} : {costForTwoMessagde}</h3>
                 <h3>Rating: {avgRating}</h3>
