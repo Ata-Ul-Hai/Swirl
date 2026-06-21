@@ -8,7 +8,7 @@ function RestaurantCard({resData}){
             <h3 className="font-bold py-4 text-lg">{resData.name}</h3>
             <h4>{resData.cuisines.join(', ')}</h4>
             <h4>{resData.costForTwo}</h4>
-            <h4>{resData.avgRatingString}</h4>
+            <h4>⭐️{resData.avgRatingString}</h4>
             <h4>{resData.locality}, {resData.areaName}</h4>
         </div>
     )
@@ -20,7 +20,7 @@ function RestaurantCard({resData}){
 export const withPromotedLabel = (RestaurantCard) =>{
     return (props) => {
         return <div>
-            <label className="absolute bg-sky-600 text-white m-2 p-2 rounded-lg">Open</label>
+            <label className="absolute bg-red-900 text-white m-2 p-2 rounded-lg">Open</label>
             <RestaurantCard {...props}/>
         </div>
     }

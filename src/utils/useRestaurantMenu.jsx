@@ -6,7 +6,7 @@ const useRestaurantMenu = (resId) => {
     useEffect(() => {
         const fetchMenu = async () => {
             try {
-                const data = await fetch(`https://corsproxy.io/?https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.8789386&lng=79.929197&restaurantId=${resId}`);
+                const data = await fetch(`/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.8789386&lng=79.929197&restaurantId=${resId}`);
                 
                 // 2. Check if the fetch was actually successful
                 if (!data.ok) {
@@ -14,7 +14,7 @@ const useRestaurantMenu = (resId) => {
                 }
 
                 const json = await data.json();
-                setMenu(json.data);
+                setMenu(json.data.cards[4].groupedCard.cardGroupMap?.["REGULAR"].cards);
                 
             } catch (error) {
                 console.error("Failed to fetch menu:", error);

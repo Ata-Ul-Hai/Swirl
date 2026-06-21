@@ -4,10 +4,10 @@ import { Link } from 'react-router'
 function Header(props) {
     const {isOnline} = props
     return (
-        <div className="flex justify-between bg-pink-100 shadow-lg">
+        <div className="flex justify-between bg-emerald-100 shadow-lg">
             
             
-            <img className='w-30 shadow-lg' src={LOGO_URL} alt="logo" />
+            <img className='w-30 p-2 rounded-full' src={LOGO_URL} alt="logo" />
             
 
             <div className="flex items-center">
