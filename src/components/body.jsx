@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import RestaurantCard from "./RestaurantCard"  
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard"  
 // import './body.css'
 import axios from 'axios'
 import Shimmer from './Shimmer'
@@ -10,11 +10,13 @@ function Body(){
     const [filterProduct, setFilterProduct] = useState([])
     const [searchQuery, setSearchQuery] = useState('')
 
+    const RestauranntCardPromoted = withPromotedLabel(RestaurantCard);
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
 
-                const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.8789386&lng=79.929197&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+                const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5488579&lng=77.2900505&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
 
                 console.log(json.data.data);
                 
@@ -64,7 +66,15 @@ function Body(){
             
             <div className="flex flex-wrap">
                 {filterProduct?.map((product) => (
-                    <Link key={product.info.id} to={'/restaurants/'+product.info.id}> <RestaurantCard resData = {product.info} /> </Link>
+                    <Link key={product.info.id} to={'/restaurants/'+product.info.id}> 
+                    {/* currently switched to isOpen because promoted label not there anymore */}
+                        { product.info.isOpen ? (
+                                <RestauranntCardPromoted resData = {product.info}/>
+                            ):(
+                                <RestaurantCard resData = {product.info} /> 
+                            )
+                        }
+                    </Link>
                 ))}
             </div>
 
