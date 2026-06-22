@@ -1,8 +1,12 @@
 // import './header.css'
+import { useContext } from 'react'
 import { LOGO_URL } from '../utils/constants'
 import { Link } from 'react-router'
+import UserContext from '../utils/UserContext'
+
 function Header(props) {
     const {isOnline} = props
+    const {loggedInUser} = useContext(UserContext)
     return (
         <div className="flex justify-between bg-emerald-100 shadow-lg">
             
@@ -34,6 +38,14 @@ function Header(props) {
 
                     <li className='px-4'>
                         <Link to='/cart'>Cart</Link>
+                    </li>
+
+                    <li className='px-4'>
+                        <button>LogIn</button>
+                    </li>
+
+                    <li className='px-4'>
+                        {loggedInUser}
                     </li>
                 </ul>
             </div>

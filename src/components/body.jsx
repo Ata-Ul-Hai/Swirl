@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard"  
 // import './body.css'
 import axios from 'axios'
 import Shimmer from './Shimmer'
 import { Link } from 'react-router'
+import UserContext from '../utils/UserContext'
 
 function Body(){
     const [products, setProducts] = useState([])
@@ -11,6 +12,7 @@ function Body(){
     const [searchQuery, setSearchQuery] = useState('')
 
     const RestauranntCardPromoted = withPromotedLabel(RestaurantCard);
+    const {loggedInUser, setUserName} = useContext(UserContext)
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -35,10 +37,10 @@ function Body(){
     
     return products?.length === 0 ? <Shimmer />: (
 
-        <div className="body"> 
+        <div className="body "> 
             <div className='flex'>
                 <div className="search mx-4 p-4">
-                    <input type="text" className='border border-solid border-black' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
+                    <input type="text" className='border border-solid border-black px-2' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
 
                     <button className='px-4 py-2 bg-green-100 m-4  rounded-lg' onClick={() => {
                         const filtered = products.filter((res) => res.info.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -47,7 +49,8 @@ function Body(){
                         setFilterProduct(filtered);
                     }}>Search</button>
                 </div>
-                <div className="search m-4 p-4 flex items-center">
+
+                <div className="search m-4 p-4 flex items-center ">
                     <button
                     className="px-4 py-2 bg-gray-100 rounded-lg"
                     onClick={() => {
@@ -60,11 +63,17 @@ function Body(){
                     Top Rated Restaurants
                     </button>
                 </div>  
+
+                <div className="search m-4 p-4 flex items-center ">
+                    <label htmlFor="user">For User</label>
+                    <input id='user'
+                    value={loggedInUser} 
+                    className='border border-black px-2 m-2' 
+                    onChange={(e) => setUserName(e.target.value)} />
+                </div> 
             </div>
 
-            
-            
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-between">
                 {filterProduct?.map((product) => (
                     <Link key={product.info.id} to={'/restaurants/'+product.info.id}> 
                     {/* currently switched to isOpen because promoted label not there anymore */}
