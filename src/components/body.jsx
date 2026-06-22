@@ -42,25 +42,29 @@ function Body(){
                 <div className="search mx-4 p-4">
                     <input type="text" className='border border-solid border-black px-2' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
 
-                    <button className='px-4 py-2 bg-green-100 m-4  rounded-lg' onClick={() => {
+                    <button 
+                    className='px-4 py-2 m-4 rounded-lg hover:cursor-pointer bg-green-200 hover:bg-green-400 focus:outline-2 focus:outline-offset-2 active:outline-green-700' 
+                    onClick={() => {
                         const filtered = products.filter((res) => res.info.name.toLowerCase().includes(searchQuery.toLowerCase()))
                         // console.log(filtered);
                         
                         setFilterProduct(filtered);
-                    }}>Search</button>
+                    }}>
+                        Search
+                    </button>
                 </div>
 
                 <div className="search m-4 p-4 flex items-center ">
                     <button
-                    className="px-4 py-2 bg-gray-100 rounded-lg"
+                    className="px-4 py-2 rounded-lg hover:cursor-pointer text-white bg-violet-600 hover:bg-violet-800 focus:outline-2 focus:outline-offset-2  active:outline-violet-700"
                     onClick={() => {
-                        const filteredList = products.filter(
+                        const filteredList = filterProduct.filter(
                         (res) => res.info.avgRating > 4
                         );
                         setFilterProduct(filteredList);
                     }}
                     >
-                    Top Rated Restaurants
+                        Top Rated Restaurants
                     </button>
                 </div>  
 
