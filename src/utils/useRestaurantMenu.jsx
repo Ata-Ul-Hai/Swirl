@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import mockMenuData from "./mockJSONMenu";
 
 const useRestaurantMenu = (resId) => {
     const [menu, setMenu] = useState(null);
@@ -6,18 +7,25 @@ const useRestaurantMenu = (resId) => {
     useEffect(() => {
         const fetchMenu = async () => {
             try {
-                const data = await fetch(`/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.8789386&lng=79.929197&restaurantId=${resId}`);
-                
-                // 2. Check if the fetch was actually successful
-                if (!data.ok) {
-                    throw new Error(`HTTP error! status: ${data.status}`);
-                }
+                setTimeout(() => {
+                    const json = mockMenuData; 
+                    
+                    // Dynamically find the REGULAR menu container
+                    const regularCardsContainer = json?.data?.cards?.find(
+                        (card) => card?.groupedCard
+                    );
 
-                const json = await data.json();
-                setMenu(json.data.cards[4].groupedCard.cardGroupMap?.["REGULAR"].cards);
+                    const regularCards = regularCardsContainer?.groupedCard?.cardGroupMap?.["REGULAR"]?.cards;
+                    
+                    if (regularCards) {
+                        setMenu(regularCards);
+                    } else {
+                        console.error("Menu structure not found.");
+                    }
+                }, 500); // 500ms fake delay
                 
             } catch (error) {
-                console.error("Failed to fetch menu:", error);
+                console.error("Failed to load menu:", error);
             }
         };
 

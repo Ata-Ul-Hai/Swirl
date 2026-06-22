@@ -18,9 +18,9 @@ function Body(){
 
                 const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5488579&lng=77.2900505&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
 
-                console.log(json.data.data);
+                // console.log(json.data.data);
                 
-                console.log(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                // console.log(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
                 
                 // console.log(json?.data?.cards[]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 

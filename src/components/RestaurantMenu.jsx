@@ -1,6 +1,7 @@
 import useRestaurantMenu from "../utils/useRestaurantMenu"
 import Shimmer from "./Shimmer"
 import { useParams } from "react-router"
+import RestaurantCategory from "./RestaurantCategory"
 
 const RestaurantMenu = () => {
 
@@ -14,12 +15,16 @@ const RestaurantMenu = () => {
         <Shimmer/>
         </div>
     } else {
-        const menu = menuArray.filter( (c) => c.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory' );
-        console.log(menu);
+        const categories = menuArray.filter( (c) => c.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory' );
+        // console.log(categories);
         
         return(
-            <div className="">
-                Items
+            <div className="text-center p-2 m-2">
+                {
+                categories.map( (category) => (
+                    <RestaurantCategory key={category?.card?.card.title} data={category?.card?.card}/>
+                    ))}
+                
             </div>
         )
     }
