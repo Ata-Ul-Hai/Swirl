@@ -3,6 +3,8 @@ import { Outlet } from "react-router";
 import useOnlineStatus from "../utils/useOnlineState"
 import UserContext from "../utils/UserContext";
 import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import appStore from "../utils/AppStore";
 
 function AppLayout() {
   const isOnline = useOnlineStatus()
@@ -16,6 +18,7 @@ function AppLayout() {
   },[])
 
   return (
+    <Provider store={appStore}>
     <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
       <div className="app">
         <Header isOnline = {isOnline}/>
@@ -27,6 +30,7 @@ function AppLayout() {
         }
       </div>
     </UserContext.Provider>
+    </Provider>
   )
 }
 
