@@ -1,4 +1,3 @@
-// import './header.css'
 import { useContext, useState } from 'react'
 import { LOGO_URL } from '../utils/constants'
 import { Link } from 'react-router'
