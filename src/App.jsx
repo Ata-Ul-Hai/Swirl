@@ -8,7 +8,7 @@ import Contact from './components/Contact.jsx'
 import Cart from "./components/Cart.jsx";
 import Error from "./components/Error.jsx";
 import Shimmer from "./components/Shimmer.jsx";
-import Header from "./components/header"
+import Header from "./components/Header.jsx"
 import Body from "./components/Body"
 // import Grocery from "./components/Grocery.jsx";
 
