@@ -1,5 +1,5 @@
 // import './header.css'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { LOGO_URL } from '../utils/constants'
 import { Link } from 'react-router'
 import UserContext from '../utils/UserContext'
@@ -9,8 +9,9 @@ function Header(props) {
     const {isOnline} = props
     const {loggedInUser} = useContext(UserContext)
     const cartItems = useSelector((store) => store.cart.items)
+    const [btnNameReact, setBtnNameReact] = useState("LogIn");
     // console.log(cartItems);
-    
+
     
     return (
         <div className="flex justify-between bg-emerald-100 shadow-lg">
@@ -44,7 +45,14 @@ function Header(props) {
                     </li>
 
                     <li className='px-4'>
-                        <button>LogIn</button>
+                        <button onClick={() => {
+                            btnNameReact==='LogIn'
+                                ? setBtnNameReact('LogOut')
+                                : setBtnNameReact('LogIn')
+                            }}
+                        >
+                            {btnNameReact}
+                        </button>
                     </li>
 
                     <li className='px-4'>
