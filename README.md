@@ -1,7 +1,7 @@
 # React 🚀
 
 
-# Parcel but we are using Vite
+## Parcel but we are using Vite
 - Dev Build
 - Local Server
 - HMR = Hot Module Replacement
@@ -22,26 +22,22 @@
 
 
 
-# Fooood
+## Fooood
 
-
-/**
  * Header
- *  - Logo
- *  - Nav Items
+   - Logo
+   - Nav Items
  * Body
- *  - Search
- *  - RestaurantContainer
- *    - RestaurantCard
- *      - Img
- *      - Name of Res, Star Rating, cuisine, delery tie
+   - Search
+   - RestaurantContainer
+     - RestaurantCard
+       - Img
+       - Name of Res, Star Rating, cuisine, delery tie
  * Footer
- *  - Copyright
- *  - Links
- *  - Address
- *  - Contact
- */
-
+  - Copyright
+  - Links
+  - Address
+  - Contact
 
 
  Two types of Export/Import
@@ -59,21 +55,21 @@ export const Component;
 import {Component} from "path";
 
 
-# React Hooks
+## React Hooks
  (Normal JS utility functions)
 - useState() - Superpowerful State Variables in react
 - useEffect()
 
 
 
-#  2 types Routing in web apps
+##  2 types Routing in web apps
  - Client Side Routing
  - Server Side Routing
 
 
 
 
- # Redux Toolkit
+ ## Redux Toolkit
   - Install @reduxjs/toolkit and react-redux
   - Build our store
   - Connect our store to our app
@@ -82,12 +78,13 @@ import {Component} from "path";
   - Selector
 
 
-# Types of testing (devloper)
+## Types of testing (devloper)
  - Unit Testing
  - Integration Testing
  - End to End Testing - e2e testing
 
-# Setting up Testing in our app
+## Setting up Testing in our app
+### For Jest
  - Install React Testing Library
  - Installed jest
  - Installed Babel dependencies
@@ -99,3 +96,18 @@ import {Component} from "path";
  - Include @babel/preset-react inside my babel config
  - npm i -D @testing-library/jest-dom
  
+### For Vitest
+ - Install Vitest testing dependencies: 
+```python
+ npm install --save-dev vitest jsdom @testing-library/react @testing-library/jest-dom
+
+``` 
+ - Update your package.json
+```python
+    "scripts": {
+  "test": "vitest"
+}
+```
+ - Modify vite.config.js file with a test section 
+ - Add a test setup file (Import @testing-library/jest-dom there so DOM matchers work in tests.)
+ - Use files like Component.test.jsx or Component.spec.jsx

@@ -8,4 +8,9 @@ export default defineConfig({
     react(), 
     tailwindcss(),
   ],
+  test: {
+    globals: true,         // <-- Mimics Jest's global variables
+    environment: 'jsdom',  // <-- Simulates a browser environment
+    setupFiles: './__tests__/setup.js', // <-- Links custom matchers
+  },
 })
