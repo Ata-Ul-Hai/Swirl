@@ -10,7 +10,8 @@ const RestaurantMenu = () => {
     const {resId} = useParams()
     // Used custom hook
     const menuArray = useRestaurantMenu(resId)
-
+    // console.log(menuArray);
+    
     if (menuArray === undefined || menuArray === '' || menuArray === null){
         return <div>
         <h1 className="flex justify-center">Menu</h1>

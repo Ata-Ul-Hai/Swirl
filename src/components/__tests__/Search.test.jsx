@@ -42,13 +42,11 @@ it('should search Res List for pizza text input', async () =>{
     const cardBeforeSearch = screen.getAllByTestId('resCard')
     expect(cardBeforeSearch.length).toBe(20)
 
-    // console.log(searchInput);
-
     fireEvent.change(searchInput, {target: {value: "pizza"}})
     fireEvent.click(searchButton)
 
     const resCards = screen.getAllByTestId('resCard')
-    // console.log(resCards);
+
     expect(resCards.length).toBe(3)
 })
 

@@ -12,11 +12,13 @@ const ItemList = (itemCards) => {
         dispatch(addItem(item));
     };
 
-    console.log(itemCards);
+    // console.log(itemCards);
     
     return <div>
         {itemList.map((item) => (
-            <div key={item.card.info.id} className="p-4 m-2 border-gray-200 border-b-2 text-left flex justify-between"> 
+            <div data-testid = 'foodItems' 
+            key={item.card.info.id} 
+            className="p-4 m-2 border-gray-200 border-b-2 text-left flex justify-between"> 
                 <div>
                     <div className="py-2 font-bold text-sm flex flex-col">
                         <span>{item.card.info.name}</span>

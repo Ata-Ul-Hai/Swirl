@@ -1,8 +1,23 @@
 import { render, screen } from "@testing-library/react"
 import Contact from "../Contact"
 import { describe, expect, it, test } from "vitest"
+// import { afterAll, afterEach, beforeAll, beforeEach } from "vitest"
 
 describe("Tests for Contact Page", () => {
+    // beforeAll(() => {
+    //     console.log('before all');
+    // })
+    // beforeEach(() => {
+    //     console.log('before each');
+    // })
+
+    // afterAll(()=>{
+    //     console.log('after all');
+    // })
+    // afterEach(() => {
+    //     console.log('after each');
+    // })
+
     test('Should check if heading is being rendered',() => {
         render(<Contact />)
 
