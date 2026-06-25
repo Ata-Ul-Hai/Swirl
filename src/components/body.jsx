@@ -20,7 +20,7 @@ function Body(){
 
                 const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5488579&lng=77.2900505&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
 
-                // console.log(json.data.data);
+                console.log(json);
                 
                 // console.log(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
                 
@@ -40,10 +40,13 @@ function Body(){
         <div className="body "> 
             <div className='flex'>
                 <div className="search mx-4 p-4">
-                    <input type="text" className='border border-solid border-black px-2' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
+                    <input type="text" 
+                    data-testid = 'search'
+                    className='border border-solid border-black px-2' value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value)}}/>
 
                     <button 
                     className='px-4 py-2 m-4 rounded-lg hover:cursor-pointer bg-green-200 hover:bg-green-400 focus:outline-2 focus:outline-offset-2 active:outline-green-700' 
+                    
                     onClick={() => {
                         const filtered = products.filter((res) => res.info.name.toLowerCase().includes(searchQuery.toLowerCase()))
                         // console.log(filtered);
@@ -77,7 +80,7 @@ function Body(){
                 </div> 
             </div>
 
-            <div className="flex flex-wrap justify-between">
+            <div  className="flex flex-wrap justify-between">
                 {filterProduct?.map((product) => (
                     <Link key={product.info.id} to={'/restaurants/'+product.info.id}> 
                     {/* currently switched to isOpen because promoted label not there anymore */}
