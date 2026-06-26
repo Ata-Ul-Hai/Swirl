@@ -2,36 +2,45 @@ import { useState, useEffect } from "react";
 import mockMenuData from "./mockJSONMenu";
 
 const useRestaurantMenu = (resId) => {
-    const [menu, setMenu] = useState(null);
+    const [menuData, setMenuData] = useState(null);
 
     useEffect(() => {
         const fetchMenu = async () => {
             try {
-                const json = mockMenuData; 
-                
+                const json = mockMenuData;
+
+                const restaurantCard = json?.data?.cards?.find(
+                    (card) =>
+                        card?.card?.card?.["@type"] ===
+                        "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+                );
+
                 // Dynamically find the REGULAR menu container
                 const regularCardsContainer = json?.data?.cards?.find(
                     (card) => card?.groupedCard
                 );
 
-                const regularCards = regularCardsContainer?.groupedCard?.cardGroupMap?.["REGULAR"]?.cards;
-                
+                const regularCards =
+                    regularCardsContainer?.groupedCard?.cardGroupMap?.["REGULAR"]?.cards;
+
                 if (regularCards) {
-                    setMenu(regularCards);
+                    setMenuData({
+                        restaurantInfo: restaurantCard?.card?.card?.info,
+                        categories: regularCards,
+                    });
                 } else {
                     console.error("Menu structure not found.");
-                } 
+                }
             } catch (error) {
                 console.error("Failed to load menu:", error);
             }
         };
 
-
-            fetchMenu();
+        fetchMenu();
 
     }, [resId]);
 
-    return menu;
+    return menuData;
 };
 
 export default useRestaurantMenu;

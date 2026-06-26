@@ -2,9 +2,7 @@ import { CDN_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 
-const ItemList = (itemCards) => {
-    const itemList = itemCards.data
-
+const ItemList = ({ data: itemList }) => {
     const dispatch = useDispatch();
 
     const handleAddBtn = (item) => {
@@ -12,36 +10,81 @@ const ItemList = (itemCards) => {
         dispatch(addItem(item));
     };
 
-    // console.log(itemCards);
-    
-    return <div>
-        {itemList.map((item) => (
-            <div data-testid = 'foodItems' 
-            key={item.card.info.id} 
-            className="p-4 m-2 border-gray-200 border-b-2 text-left flex justify-between"> 
-                <div>
-                    <div className="py-2 font-bold text-sm flex flex-col">
-                        <span>{item.card.info.name}</span>
-                        <span>₹{(item.card.info.defaultPrice)/100}</span>
-                    </div>
-                    <p className="text-xs w-11/12">{item.card.info.description}</p>
-                </div>
-                <div className="">
-                    <div className="absolute">
-                        <button className="text-green-600 font-bold py-1 px-5 text-lg bg-white border border-solid border-green-600 rounded-xl"
-                        onClick={() => handleAddBtn(item)} >
-                            ADD
-                        </button>
-                    </div>
-                </div>
-                    <img src={CDN_URL + item.card.info.imageId} alt="img" className="w-36 rounded-xl" />
+    const getPrice = (info) => {
+        const price = info.price ?? info.defaultPrice;
+        return price ? `₹${price / 100}` : "";
+    };
 
-                
-            </div>
-        ))
-        
-        }
-        
-    </div>
-}
-export default ItemList
+    return (
+        <div>
+            {itemList.map((item) => {
+                const info = item.card.info;
+                const hasImage = Boolean(info.imageId);
+
+                return (
+                    <div
+                        data-testid="foodItems"
+                        key={info.id}
+                        className="flex justify-between gap-4 p-4 border-b border-gray-100 last:border-b-0"
+                    >
+                        <div className="flex-1 min-w-0 text-left">
+                            <div className="flex items-center gap-2">
+                                <span
+                                    className={`inline-block w-4 h-4 border-2 rounded-sm shrink-0 ${
+                                        info.isVeg
+                                            ? "border-green-600"
+                                            : "border-red-600"
+                                    }`}
+                                >
+                                    <span
+                                        className={`block w-2 h-2 rounded-full m-auto mt-0.5 ${
+                                            info.isVeg ? "bg-green-600" : "bg-red-600"
+                                        }`}
+                                    />
+                                </span>
+                                <h4 className="font-semibold text-gray-900">{info.name}</h4>
+                            </div>
+
+                            <p className="font-medium text-gray-800 mt-2">{getPrice(info)}</p>
+
+                            {info.description && (
+                                <p className="text-sm text-gray-500 mt-2 line-clamp-3">
+                                    {info.description}
+                                </p>
+                            )}
+                        </div>
+
+                        {hasImage && (
+                            <div className="relative shrink-0 w-28 sm:w-36">
+                                <img
+                                    src={CDN_URL + info.imageId}
+                                    alt={info.name}
+                                    className="w-full h-24 sm:h-28 object-cover rounded-xl"
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-green-600 font-bold text-sm bg-white border-2 border-green-600 rounded-lg px-6 py-1 shadow-sm hover:bg-green-50 transition-colors cursor-pointer"
+                                    onClick={() => handleAddBtn(item)}
+                                >
+                                    ADD
+                                </button>
+                            </div>
+                        )}
+
+                        {!hasImage && (
+                            <button
+                                type="button"
+                                className="self-start shrink-0 text-green-600 font-bold text-sm bg-white border-2 border-green-600 rounded-lg px-6 py-1 hover:bg-green-50 transition-colors cursor-pointer"
+                                onClick={() => handleAddBtn(item)}
+                            >
+                                ADD
+                            </button>
+                        )}
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
+export default ItemList;

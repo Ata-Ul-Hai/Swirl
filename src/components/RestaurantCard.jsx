@@ -5,7 +5,7 @@ function RestaurantCard({resData}){
         <div data-testid="resCard" className="w-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
             <div className="relative">
                 <img
-                    className="aspect-[4/3] w-full object-cover"
+                    className="aspect-4/3 w-full object-cover"
                     src={CDN_URL + resData.cloudinaryImageId}
                     alt={resData.name}
                 />
@@ -23,6 +23,9 @@ function RestaurantCard({resData}){
     )
 }
 
+// Higher Order Component
+
+// input - RestaurantCard =>> RestaurantCardPromoted but this will give isOpen becuase promoted no more available
 export const withPromotedLabel = (RestaurantCard) => {
     return (props) => {
         return (

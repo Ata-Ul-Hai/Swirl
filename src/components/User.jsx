@@ -30,14 +30,17 @@ class User extends React.Component {
         const {name, email, location, avatar_url} = this.state.userInfo
 
         return !(this.state.userInfo)?<Shimmer />: (
-            <div className='user-card w-full flex border-2 border-solid border-black rounded-2xl bg-blue-100'>
-                <img className='user-img w-40 rounded-4xl m-4' src={avatar_url} alt="user_pfp" />
-                <div className='m-4 p-1'>
-                    <h2 className='text-xl text-bold mx-4'>{name}</h2>
-                    <h3 className='mx-4'>Contact: {email}</h3>
-                    <h3 className='mx-4'>Location: {location}</h3>
+            <div className="w-full flex flex-col sm:flex-row items-center sm:items-start gap-4 border border-gray-100 rounded-2xl bg-white shadow-sm p-4 sm:p-6">
+                <img
+                    className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-orange-100"
+                    src={avatar_url}
+                    alt="user_pfp"
+                />
+                <div className="text-center sm:text-left">
+                    <h2 className="text-xl font-bold text-gray-900">{name}</h2>
+                    <h3 className="text-gray-600 mt-2">Contact: {email}</h3>
+                    <h3 className="text-gray-600 mt-1">Location: {location}</h3>
                 </div>
-                
             </div>
         )
     }

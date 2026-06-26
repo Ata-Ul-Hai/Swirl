@@ -16,7 +16,10 @@ function Body(){
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+
                 const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5488579&lng=77.2900505&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+
+                // console.log(json);
 
                 setProducts(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
                 setFilterProduct(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
@@ -44,9 +47,8 @@ function Body(){
                         <button
                             className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-5 py-2.5 font-medium transition-colors cursor-pointer"
                             onClick={() => {
-                                const filtered = products.filter((res) =>
-                                    res.info.name.toLowerCase().includes(searchQuery.toLowerCase())
-                                )
+                                const filtered = products.filter((res) => res.info.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                
                                 setFilterProduct(filtered);
                             }}
                         >
@@ -82,6 +84,7 @@ function Body(){
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                     {filterProduct?.map((product) => (
                         <Link key={product.info.id} to={'/restaurants/'+product.info.id} className="block w-full">
+                            {/* currently switched to isOpen because promoted label not there anymore */}
                             { product.info.isOpen ? (
                                 <RestauranntCardPromoted resData={product.info}/>
                             ):(
