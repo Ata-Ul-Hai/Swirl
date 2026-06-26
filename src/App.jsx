@@ -9,7 +9,7 @@ import Cart from "./components/Cart.jsx";
 import Error from "./components/Error.jsx";
 import Shimmer from "./components/Shimmer.jsx";
 import Header from "./components/Header.jsx"
-import Body from "./components/Body"
+import Body from "./components/Body.jsx"
 // import Grocery from "./components/Grocery.jsx";
 
 // Chunking

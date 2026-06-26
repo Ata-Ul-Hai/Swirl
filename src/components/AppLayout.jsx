@@ -1,10 +1,10 @@
-import Header from "./Header";
+import Header from "./Header.jsx";
 import { Outlet } from "react-router";
 import useOnlineStatus from "../utils/useOnlineState"
 import UserContext from "../utils/UserContext";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import appStore from "../utils/AppStore";
+import appStore from "../utils/appStore";
 
 function AppLayout() {
   const isOnline = useOnlineStatus()

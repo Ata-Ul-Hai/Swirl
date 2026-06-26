@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { expect, it } from "vitest";
-import Header from "../header";
+import Header from "../Header";
 import { Provider } from "react-redux";
 import appStore from '../../utils/appStore'
 import { BrowserRouter } from "react-router";
