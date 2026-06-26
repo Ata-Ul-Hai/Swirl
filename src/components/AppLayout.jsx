@@ -1,4 +1,4 @@
-import Header from "./Header.jsx";
+import Header from "./Header";
 import { Outlet } from "react-router";
 import useOnlineStatus from "../utils/useOnlineState"
 import UserContext from "../utils/UserContext";
