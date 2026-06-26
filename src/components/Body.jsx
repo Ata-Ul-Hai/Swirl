@@ -4,6 +4,7 @@ import axios from 'axios'
 import Shimmer from './Shimmer'
 import { Link } from 'react-router'
 import UserContext from '../utils/UserContext'
+import { RESTAURANTS_API } from '../utils/constants'
 
 function Body(){
     const [products, setProducts] = useState([])
@@ -17,7 +18,8 @@ function Body(){
         const fetchProducts = async () => {
             try {
 
-                const json = await axios.get("https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5488579&lng=77.2900505&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+                // Server-side proxy — corsfix returns 403 on production; Swiggy blocks direct browser calls
+                const json = await axios.get(RESTAURANTS_API)
 
                 // console.log(json);
 
