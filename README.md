@@ -1,113 +1,97 @@
-# React 🚀
+# Swirl
 
+Swirl is a React food ordering app built with Vite, React Router, Redux Toolkit, and Tailwind CSS. It lets users browse restaurants, inspect restaurant menus, add items to a cart, and explore a lazily loaded grocery section.
 
-## Parcel but we are using Vite
-- Dev Build
-- Local Server
-- HMR = Hot Module Replacement
-- File Watching Algorithm - written in C++
-- Caching - Faster Builds
-- Image Optimization
-- Minification
-- Bundling
-- Compress
-- Consistent Hashing
-- Code Splitting
-- Differential Bundling - support older browsers
-- Diagnostic
-- Error Handling
-- HTTPs
-- Tree Shaking - remove unused code
-- Different dev and prod bundles
+## Features
 
+- Restaurant listing with search and top-rated filtering.
+- Restaurant detail pages with category-based menus.
+- Cart management powered by Redux Toolkit.
+- Responsive header with mobile navigation and live cart count.
+- User name context shared across the app.
+- Offline/online status indicator.
+- Lazy-loaded grocery route with a shimmer fallback.
+- Testing setup with Vitest and React Testing Library.
 
+## Tech Stack
 
-## Fooood
+- React 19
+- Vite
+- React Router
+- Redux Toolkit
+- Tailwind CSS
+- Axios
+- Vitest
 
- * Header
-   - Logo
-   - Nav Items
- * Body
-   - Search
-   - RestaurantContainer
-     - RestaurantCard
-       - Img
-       - Name of Res, Star Rating, cuisine, delery tie
- * Footer
-  - Copyright
-  - Links
-  - Address
-  - Contact
+## Getting Started
 
+### Prerequisites
 
- Two types of Export/Import
+- Node.js 18 or newer
+- npm
 
+### Install dependencies
 
-- Default Export/Import
-
-export default Component;
-import Component from "path";
-
-
-- Named Export/Import
-
-export const Component;
-import {Component} from "path";
-
-
-## React Hooks
- (Normal JS utility functions)
-- useState() - Superpowerful State Variables in react
-- useEffect()
-
-
-
-##  2 types Routing in web apps
- - Client Side Routing
- - Server Side Routing
-
-
-
-
- ## Redux Toolkit
-  - Install @reduxjs/toolkit and react-redux
-  - Build our store
-  - Connect our store to our app
-  - Slice (cartSlice)
-  - dispatch(action)
-  - Selector
-
-
-## Types of testing (devloper)
- - Unit Testing
- - Integration Testing
- - End to End Testing - e2e testing
-
-## Setting up Testing in our app
-### For Jest
- - Install React Testing Library
- - Installed jest
- - Installed Babel dependencies
- - Configure Babel 
- - Configure Parcel Config file to disable default babel transpilation 
- - Jest  - npx jest --init
- - Install jsdom library
- - Install @babel/preset-react - to make JSX work in test cases
- - Include @babel/preset-react inside my babel config
- - npm i -D @testing-library/jest-dom
- 
-### For Vitest
- - Install Vitest testing dependencies: 
-```python
- npm install --save-dev vitest jsdom @testing-library/react @testing-library/jest-dom
-
-``` 
- - Update your package.json
-```python
-    "scripts": {
-  "test": "vitest"
-}
+```bash
+npm install
 ```
- - Modify vite.config.js file with a test section 
- - Add a test setup file (Import @testing-library/jest-dom there so DOM matchers work in tests.)
- - Use files like Component.test.jsx or Component.spec.jsx
+
+### Run the development server
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+### Run tests
+
+```bash
+npm test
+```
+
+## Available Scripts
+
+- `npm run dev` - start the local Vite dev server.
+- `npm run build` - create an optimized production build.
+- `npm run preview` - preview the production build locally.
+- `npm run lint` - run ESLint across the project.
+- `npm test` - run the Vitest test suite.
+
+## Project Structure
+
+```text
+api/                API helpers and backend-facing routes
+public/             Static public assets
+src/
+	components/       UI components and route screens
+	utils/            Context, Redux slice, hooks, and constants
+	App.jsx           Application router
+	main.jsx          App entry point
+__tests__/          Test setup
+```
+
+## Main Routes
+
+- `/` - restaurant listing and search
+- `/restaurants/:resId` - restaurant menu page
+- `/about` - about page
+- `/contact` - contact page
+- `/cart` - cart page
+- `/grocery` - lazy-loaded grocery page
+
+## Notes
+
+- Restaurant data is loaded from an external API proxy.
+- The grocery route is lazy loaded to demonstrate code splitting.
+- The cart state is stored in Redux Toolkit, while the logged-in user name is shared through context.
