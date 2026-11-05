@@ -23,8 +23,12 @@ function Body(){
 
                 // console.log(json);
 
-                setProducts(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-                setFilterProduct(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                const resList =
+                    json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants ||
+                    (Array.isArray(json?.data?.data) ? json.data.data : Array.isArray(json?.data) ? json.data : []);
+
+                setProducts(resList);
+                setFilterProduct(resList);
             } catch (error) {
                 console.error("Error fetching products:", error)
             }
@@ -63,7 +67,10 @@ function Body(){
                             className="border border-gray-300 bg-white hover:bg-gray-50 rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors cursor-pointer"
                             onClick={() => {
                                 const filteredList = products.filter(
-                                    (res) => res.info.avgRating > 4
+                                    (res) =>
+                                        (parseFloat(res.info.avgRating) ||
+                                            res.info.rating ||
+                                            0) > 4
                                 );
                                 setFilterProduct(filteredList);
                             }}
