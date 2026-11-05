@@ -35,5 +35,13 @@
     "jsdom": "^29.1.1",
     "vite": "^8.0.1",
     "vitest": "^4.1.9"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-darwin-arm64": "1.1.2",
+    "@rolldown/binding-darwin-x64": "1.1.2",
+    "@rolldown/binding-linux-arm64-gnu": "1.1.2",
+    "@rolldown/binding-linux-arm64-musl": "1.1.2",
+    "@rolldown/binding-linux-x64-gnu": "1.1.2",
+    "@rolldown/binding-linux-x64-musl": "1.1.2"
   }
 }
