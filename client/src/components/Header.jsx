@@ -56,6 +56,16 @@ function Header(props) {
 
       <li className="px-4 py-2 md:py-0">
         <Link
+          to="/restaurants"
+          className="text-gray-700 hover:text-orange-500 transition-colors font-medium"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Restaurants
+        </Link>
+      </li>
+
+      <li className="px-4 py-2 md:py-0">
+        <Link
           to="/grocery"
           className="text-gray-700 hover:text-orange-500 transition-colors"
           onClick={() => setIsMenuOpen(false)}

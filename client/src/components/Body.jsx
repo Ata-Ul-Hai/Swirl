@@ -2,39 +2,57 @@ import { useState, useEffect, useContext } from 'react'
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard"  
 import axios from 'axios'
 import Shimmer from './Shimmer'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import UserContext from '../utils/UserContext'
 import { RESTAURANTS_API } from '../utils/constants'
+import ResList from './Mock/ResList.json'
 
 function Body(){
+    const [searchParams] = useSearchParams();
+    const queryParam = searchParams.get('search') || '';
     const [products, setProducts] = useState([])
     const [filterProduct, setFilterProduct] = useState([])
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchQuery, setSearchQuery] = useState(queryParam)
 
     const RestauranntCardPromoted = withPromotedLabel(RestaurantCard);
     const {loggedInUser, setUserName} = useContext(UserContext)
 
     useEffect(() => {
         const fetchProducts = async () => {
+            let resList = [];
             try {
-
-                // Server-side proxy — corsfix returns 403 on production; Swiggy blocks direct browser calls
+                // Server-side proxy or backend API
                 const json = await axios.get(RESTAURANTS_API)
 
-                // console.log(json);
-
-                const resList =
+                resList =
                     json?.data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants ||
                     (Array.isArray(json?.data?.data) ? json.data.data : Array.isArray(json?.data) ? json.data : []);
-
-                setProducts(resList);
-                setFilterProduct(resList);
             } catch (error) {
-                console.error("Error fetching products:", error)
+                console.warn("API fetch error, using local fallback seed data:", error)
+            }
+
+            if (!resList || resList.length === 0) {
+                resList = ResList?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+            }
+
+            setProducts(resList);
+
+            if (queryParam) {
+                const q = queryParam.toLowerCase();
+                const filtered = resList.filter((res) => {
+                    const nameMatch = res?.info?.name?.toLowerCase().includes(q);
+                    const cuisineMatch = Array.isArray(res?.info?.cuisines)
+                        ? res.info.cuisines.some((c) => c.toLowerCase().includes(q))
+                        : String(res?.info?.cuisines || "").toLowerCase().includes(q);
+                    return nameMatch || cuisineMatch;
+                });
+                setFilterProduct(filtered.length > 0 ? filtered : resList);
+            } else {
+                setFilterProduct(resList);
             }
         }
         fetchProducts()
-    }, [])
+    }, [queryParam])
     
     return products?.length === 0 ? <Shimmer />: (
 

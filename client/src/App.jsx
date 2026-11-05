@@ -9,6 +9,7 @@ import Cart from "./components/Cart.jsx";
 import Error from "./components/Error.jsx";
 import Shimmer from "./components/Shimmer.jsx";
 import Body from "./components/Body.jsx";
+import LandingPage from "./components/LandingPage.jsx";
 import RestaurantPanel from "./components/RestaurantPanel.jsx";
 import OrderTracker from "./components/OrderTracker.jsx";
 
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <LandingPage />,
+      },
+      {
+        path: "/restaurants",
         element: <Body />,
       },
       {
