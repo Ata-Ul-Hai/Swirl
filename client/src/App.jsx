@@ -1,5 +1,4 @@
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import React, { lazy, Suspense } from "react";
 import AppLayout from "./components/AppLayout.jsx";
 import RestaurantMenu from "./components/RestaurantMenu.jsx";

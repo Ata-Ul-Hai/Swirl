@@ -27,11 +27,11 @@ it('should load restaurant menu component', async () =>{
     const addBtns = screen.getAllByRole('button', {name: 'ADD'});
     fireEvent.click(addBtns[0]);
     
-    expect(screen.getByText('🛒(1)')).toBeInTheDocument();
+    expect(screen.getByText(/1\s*Cart/i)).toBeInTheDocument();
 
     fireEvent.click(addBtns[1]);
 
-    expect(screen.getByText('🛒(2)')).toBeInTheDocument();
+    expect(screen.getByText(/2\s*Cart/i)).toBeInTheDocument();
 
     expect(screen.getAllByTestId('foodItems').length).toBe(20);
 
