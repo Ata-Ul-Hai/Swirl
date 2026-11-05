@@ -111,6 +111,10 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    prepTimeMinutes: {
+      type: Number,
+      default: null,
+    },
     status: {
       type: String,
       enum: ORDER_STATUSES,

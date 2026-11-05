@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+export const USER_ROLES = ["User", "RestaurantOwner", "Admin"];
+
 const addressSchema = new mongoose.Schema(
   {
     street: {
@@ -60,6 +62,17 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
     },
+    role: {
+      type: String,
+      enum: USER_ROLES,
+      default: "User",
+      index: true,
+    },
+    restaurantId: {
+      type: String,
+      default: null,
+      index: true,
+    },
     addresses: {
       type: [addressSchema],
       default: [],
@@ -94,6 +107,8 @@ userSchema.methods.generateAccessToken = function () {
       id: this._id,
       email: this.email,
       name: this.name,
+      role: this.role || "User",
+      restaurantId: this.restaurantId || null,
     },
     process.env.JWT_ACCESS_SECRET || "swirl_access_secret_key_default",
     {

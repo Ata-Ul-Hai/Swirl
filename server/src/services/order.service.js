@@ -5,10 +5,13 @@ import {
   calculateHaversineDistance,
   calculateDeliveryFee,
 } from "../utils/haversine.js";
+import { emitNewOrder, emitOrderStatus } from "../socket.js";
 import { ApiError } from "../utils/ApiError.js";
 
 // In-memory fallback
 const memoryOrders = [];
+
+export const getMemoryOrders = () => memoryOrders;
 
 /**
  * Recompute item total, delivery fee via Haversine distance, and taxes
@@ -110,6 +113,9 @@ export const placeOrder = async (
     // Clear user cart on successful order creation
     await clearUserCart(userId);
 
+    // Notify restaurant via Socket.io
+    emitNewOrder(order);
+
     return order;
   }
 
@@ -140,6 +146,9 @@ export const placeOrder = async (
 
   memoryOrders.unshift(order);
   await clearUserCart(userId);
+
+  // Notify restaurant via Socket.io
+  emitNewOrder(order);
 
   return order;
 };
@@ -179,7 +188,12 @@ export const getOrderById = async (orderId, userId) => {
 /**
  * Transition order status
  */
-export const updateOrderStatus = async (orderId, newStatus, note = "") => {
+export const updateOrderStatus = async (
+  orderId,
+  newStatus,
+  note = "",
+  prepTimeMinutes = null
+) => {
   if (!ORDER_STATUSES.includes(newStatus)) {
     throw new ApiError(
       400,
@@ -194,6 +208,9 @@ export const updateOrderStatus = async (orderId, newStatus, note = "") => {
     if (!order) throw new ApiError(404, "Order not found");
 
     order.status = newStatus;
+    if (prepTimeMinutes !== null && prepTimeMinutes !== undefined) {
+      order.prepTimeMinutes = Number(prepTimeMinutes);
+    }
     order.statusHistory.push({
       status: newStatus,
       timestamp: new Date(),
@@ -201,6 +218,7 @@ export const updateOrderStatus = async (orderId, newStatus, note = "") => {
     });
 
     await order.save();
+    emitOrderStatus(order);
     return order;
   }
 
@@ -208,6 +226,9 @@ export const updateOrderStatus = async (orderId, newStatus, note = "") => {
   if (!order) throw new ApiError(404, "Order not found");
 
   order.status = newStatus;
+  if (prepTimeMinutes !== null && prepTimeMinutes !== undefined) {
+    order.prepTimeMinutes = Number(prepTimeMinutes);
+  }
   order.statusHistory.push({
     status: newStatus,
     timestamp: new Date(),
@@ -215,5 +236,6 @@ export const updateOrderStatus = async (orderId, newStatus, note = "") => {
   });
   order.updatedAt = new Date();
 
+  emitOrderStatus(order);
   return order;
 };

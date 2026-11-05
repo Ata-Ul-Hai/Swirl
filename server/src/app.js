@@ -5,6 +5,7 @@ import restaurantRoutes from "./routes/restaurant.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import restaurantPanelRoutes from "./routes/restaurantPanel.routes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { ApiError } from "./utils/ApiError.js";
 
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/restaurant", restaurantPanelRoutes);
 
 // Catch-all for undefined routes
 app.use((req, res, next) => {

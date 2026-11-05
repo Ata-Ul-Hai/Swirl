@@ -16,13 +16,15 @@ const COOKIE_OPTIONS = {
 };
 
 export const signup = asyncHandler(async (req, res) => {
-  const { name, email, password, address } = req.body;
+  const { name, email, password, address, role, restaurantId } = req.body;
 
   const { user, accessToken, refreshToken } = await signupUser({
     name,
     email,
     password,
     address,
+    role,
+    restaurantId,
   });
 
   res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);

@@ -16,7 +16,13 @@ const memoryUsers = new Map();
 
 function generateTokens(payload) {
   const accessToken = jwt.sign(
-    { id: String(payload.id), email: payload.email, name: payload.name },
+    {
+      id: String(payload.id),
+      email: payload.email,
+      name: payload.name,
+      role: payload.role || "User",
+      restaurantId: payload.restaurantId || null,
+    },
     ACCESS_SECRET,
     { expiresIn: ACCESS_EXPIRY }
   );
@@ -33,7 +39,7 @@ function generateTokens(payload) {
 /**
  * Register a new user
  */
-export const signupUser = async ({ name, email, password, address }) => {
+export const signupUser = async ({ name, email, password, address, role = "User", restaurantId = null }) => {
   const normalizedEmail = email.toLowerCase().trim();
   const isMongoConnected = mongoose.connection.readyState === 1;
 
@@ -48,10 +54,18 @@ export const signupUser = async ({ name, email, password, address }) => {
       name: name.trim(),
       email: normalizedEmail,
       password,
+      role: role || "User",
+      restaurantId: restaurantId || null,
       addresses,
     });
 
-    const tokens = generateTokens({ id: user._id, email: user.email, name: user.name });
+    const tokens = generateTokens({
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      restaurantId: user.restaurantId,
+    });
     user.refreshToken = tokens.refreshToken;
     await user.save();
 
@@ -60,6 +74,8 @@ export const signupUser = async ({ name, email, password, address }) => {
         id: String(user._id),
         name: user.name,
         email: user.email,
+        role: user.role,
+        restaurantId: user.restaurantId,
         addresses: user.addresses,
       },
       accessToken: tokens.accessToken,
@@ -81,11 +97,19 @@ export const signupUser = async ({ name, email, password, address }) => {
     name: name.trim(),
     email: normalizedEmail,
     password: hashedPassword,
+    role: role || "User",
+    restaurantId: restaurantId || null,
     addresses,
     refreshToken: null,
   };
 
-  const tokens = generateTokens({ id, email: normalizedEmail, name: userObj.name });
+  const tokens = generateTokens({
+    id,
+    email: normalizedEmail,
+    name: userObj.name,
+    role: userObj.role,
+    restaurantId: userObj.restaurantId,
+  });
   userObj.refreshToken = tokens.refreshToken;
   memoryUsers.set(normalizedEmail, userObj);
 
@@ -94,6 +118,8 @@ export const signupUser = async ({ name, email, password, address }) => {
       id,
       name: userObj.name,
       email: userObj.email,
+      role: userObj.role,
+      restaurantId: userObj.restaurantId,
       addresses: userObj.addresses,
     },
     accessToken: tokens.accessToken,
@@ -119,7 +145,13 @@ export const loginUser = async ({ email, password }) => {
       throw new ApiError(401, "Invalid email or password");
     }
 
-    const tokens = generateTokens({ id: user._id, email: user.email, name: user.name });
+    const tokens = generateTokens({
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      restaurantId: user.restaurantId,
+    });
     user.refreshToken = tokens.refreshToken;
     await user.save();
 
@@ -128,6 +160,8 @@ export const loginUser = async ({ email, password }) => {
         id: String(user._id),
         name: user.name,
         email: user.email,
+        role: user.role,
+        restaurantId: user.restaurantId,
         addresses: user.addresses,
       },
       accessToken: tokens.accessToken,
@@ -146,7 +180,13 @@ export const loginUser = async ({ email, password }) => {
     throw new ApiError(401, "Invalid email or password");
   }
 
-  const tokens = generateTokens({ id: user.id, email: user.email, name: user.name });
+  const tokens = generateTokens({
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    restaurantId: user.restaurantId,
+  });
   user.refreshToken = tokens.refreshToken;
 
   return {
@@ -154,6 +194,8 @@ export const loginUser = async ({ email, password }) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
+      restaurantId: user.restaurantId,
       addresses: user.addresses,
     },
     accessToken: tokens.accessToken,
@@ -184,7 +226,13 @@ export const refreshUserToken = async (incomingRefreshToken) => {
       throw new ApiError(401, "Refresh token expired or revoked");
     }
 
-    const tokens = generateTokens({ id: user._id, email: user.email, name: user.name });
+    const tokens = generateTokens({
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      restaurantId: user.restaurantId,
+    });
     user.refreshToken = tokens.refreshToken;
     await user.save();
 
@@ -193,6 +241,8 @@ export const refreshUserToken = async (incomingRefreshToken) => {
         id: String(user._id),
         name: user.name,
         email: user.email,
+        role: user.role,
+        restaurantId: user.restaurantId,
         addresses: user.addresses,
       },
       accessToken: tokens.accessToken,
@@ -217,6 +267,8 @@ export const refreshUserToken = async (incomingRefreshToken) => {
     id: foundUser.id,
     email: foundUser.email,
     name: foundUser.name,
+    role: foundUser.role,
+    restaurantId: foundUser.restaurantId,
   });
   foundUser.refreshToken = tokens.refreshToken;
 
@@ -225,6 +277,8 @@ export const refreshUserToken = async (incomingRefreshToken) => {
       id: foundUser.id,
       name: foundUser.name,
       email: foundUser.email,
+      role: foundUser.role,
+      restaurantId: foundUser.restaurantId,
       addresses: foundUser.addresses,
     },
     accessToken: tokens.accessToken,
@@ -269,6 +323,8 @@ export const getUserProfile = async (userId) => {
       id: String(user._id),
       name: user.name,
       email: user.email,
+      role: user.role,
+      restaurantId: user.restaurantId,
       addresses: user.addresses,
     };
   }
@@ -279,6 +335,8 @@ export const getUserProfile = async (userId) => {
         id: u.id,
         name: u.name,
         email: u.email,
+        role: u.role,
+        restaurantId: u.restaurantId,
         addresses: u.addresses,
       };
     }
