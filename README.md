@@ -1,6 +1,8 @@
 # Swirl
 
-Swirl is a React food ordering app built with Vite, React Router, Redux Toolkit, and Tailwind CSS. It lets users browse restaurants, inspect restaurant menus, add items to a cart, and explore a lazily loaded grocery section.
+> 📘 **Architecture & System Design**: See [ARCHITECTURE.md](ARCHITECTURE.md) for full Architecture Decision Records (ADRs), 1k–10k req/s high-concurrency design, edge-case mitigation, and implementation roadmap.
+
+Swirl is a food ordering and delivery web platform built with React, Node.js, Express, PostgreSQL, and Redis.
 
 ## Features
 
