@@ -8,6 +8,7 @@
     "server"
   ],
   "scripts": {
+    "start": "node server/src/index.js",
     "build": "npm run build --workspace=client",
     "client": "npm run dev --workspace=client",
     "client:build": "npm run build --workspace=client",
