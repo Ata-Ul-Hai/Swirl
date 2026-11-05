@@ -14,6 +14,9 @@
     "client:test": "npm test --workspace=client",
     "server": "node server/src/index.js",
     "server:dev": "npm run dev --workspace=server",
+    "server:test": "npm test --workspace=server",
+    "test": "npm run client:test && npm run server:test",
+    "audit:check": "npm audit --audit-level=high",
     "seed:fetch": "node server/scripts/fetchSeedData.js"
   }
 }

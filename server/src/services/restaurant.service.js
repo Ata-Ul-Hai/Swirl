@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { Restaurant } from "../models/restaurant.model.js";
 import { Menu } from "../models/menu.model.js";
 import { ApiError } from "../utils/ApiError.js";
+import { getCache, setCache } from "../utils/redis.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +27,12 @@ function loadSeedData() {
  * Retrieve paginated restaurants with search & rating filters
  */
 export const findRestaurants = async ({ search, rating, page = 1, limit = 10 }) => {
+  const cacheKey = `restaurants:list:${search || ""}:${rating || ""}:${page}:${limit}`;
+  const cached = await getCache(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const isMongoConnected = mongoose.connection.readyState === 1;
 
   if (isMongoConnected) {
@@ -68,7 +75,7 @@ export const findRestaurants = async ({ search, rating, page = 1, limit = 10 }) 
       },
     }));
 
-    return {
+    const result = {
       total,
       page,
       limit,
@@ -77,6 +84,8 @@ export const findRestaurants = async ({ search, rating, page = 1, limit = 10 }) 
       hasPrevPage: page > 1,
       restaurants: formattedData,
     };
+    await setCache(cacheKey, result, 600);
+    return result;
   }
 
   // Fallback to local JSON seed data
@@ -126,7 +135,7 @@ export const findRestaurants = async ({ search, rating, page = 1, limit = 10 }) 
     },
   }));
 
-  return {
+  const result = {
     total,
     page,
     limit,
@@ -135,12 +144,20 @@ export const findRestaurants = async ({ search, rating, page = 1, limit = 10 }) 
     hasPrevPage: page > 1,
     restaurants: formattedData,
   };
+  await setCache(cacheKey, result, 600);
+  return result;
 };
 
 /**
  * Retrieve restaurant menu by restaurant ID
  */
 export const findRestaurantMenu = async (restaurantId) => {
+  const cacheKey = `restaurants:menu:${restaurantId}`;
+  const cached = await getCache(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const isMongoConnected = mongoose.connection.readyState === 1;
 
   if (isMongoConnected) {
@@ -181,7 +198,7 @@ export const findRestaurantMenu = async (restaurantId) => {
       },
     }));
 
-    return {
+    const menuResult = {
       restaurantInfo: {
         id: String(restaurant._id),
         name: restaurant.name,
@@ -196,6 +213,8 @@ export const findRestaurantMenu = async (restaurantId) => {
       },
       categories,
     };
+    await setCache(cacheKey, menuResult, 900);
+    return menuResult;
   }
 
   // Fallback to local JSON seed data
@@ -240,7 +259,7 @@ export const findRestaurantMenu = async (restaurantId) => {
     },
   }));
 
-  return {
+  const menuResult = {
     restaurantInfo: {
       id: String(restaurant.id),
       name: restaurant.name,
@@ -255,4 +274,6 @@ export const findRestaurantMenu = async (restaurantId) => {
     },
     categories,
   };
+  await setCache(cacheKey, menuResult, 900);
+  return menuResult;
 };

@@ -4,6 +4,7 @@ import { Menu } from "../models/menu.model.js";
 import { updateOrderStatus, getMemoryOrders } from "./order.service.js";
 import { emitItemAvailability } from "../socket.js";
 import { ApiError } from "../utils/ApiError.js";
+import { delCache } from "../utils/redis.js";
 
 // In-memory fallback tracking for item availability
 const itemStockOverrides = new Map();
@@ -107,6 +108,7 @@ export const toggleMenuItemStock = async (restaurantId, itemId, inStock) => {
 
   // Update memory/cache
   itemStockOverrides.set(`${restaurantId}_${itemId}`, inStock);
+  await delCache(`restaurants:menu:${restaurantId}`);
 
   // Broadcast via Socket.io
   emitItemAvailability(restaurantId, itemId, inStock);
