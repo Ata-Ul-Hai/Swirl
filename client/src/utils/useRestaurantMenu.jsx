@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "./api";
 import mockMenuData from "./mockJSONMenu";
 
 const useRestaurantMenu = (resId) => {
@@ -40,7 +40,7 @@ const useRestaurantMenu = (resId) => {
       }
 
       try {
-        const response = await axios.get(`/api/restaurants/${resId}/menu`);
+        const response = await api.get(`/api/restaurants/${resId}/menu`);
         if (
           isMounted &&
           response?.data?.data?.restaurantInfo &&

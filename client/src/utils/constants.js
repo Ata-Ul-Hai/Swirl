@@ -8,6 +8,7 @@ export const LOGO_URL =
 export const MENU_API =
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.5488579&lng=77.2900505&restaurantId=";
 
-// Proxied through /api/restaurants (Vercel serverless) — browser cannot call Swiggy directly
-export const RESTAURANTS_API = "/api/restaurants";
+// API base URL configured via VITE_API_BASE_URL (points to Render in production, relative fallback in local/Vercel)
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+export const RESTAURANTS_API = `${API_BASE_URL}/api/restaurants`;
 
