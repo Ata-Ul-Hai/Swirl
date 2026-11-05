@@ -1,6 +1,6 @@
 import ItemList from "./ItemList.jsx"
 
-function RestaurantCategory({ data, showItems, setShowIndex, resetIndex }) {
+function RestaurantCategory({ data, restaurantInfo, showItems, setShowIndex, resetIndex }) {
     const handleClick = () => {
         if (showItems) {
             resetIndex()
@@ -30,7 +30,7 @@ function RestaurantCategory({ data, showItems, setShowIndex, resetIndex }) {
             {/* Accordion body */}
             {showItems && (
                 <div className="px-2 pb-2">
-                    <ItemList data={data.itemCards} />
+                    <ItemList data={data.itemCards} restaurantInfo={restaurantInfo} />
                 </div>
             )}
         </div>

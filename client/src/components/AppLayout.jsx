@@ -2,10 +2,51 @@ import Header from "./Header.jsx";
 import { Outlet } from "react-router";
 import useOnlineStatus from "../utils/useOnlineState";
 import UserContext from "../utils/UserContext";
-import { useEffect, useState, useCallback } from "react";
-import { Provider } from "react-redux";
+import { useEffect, useState, useCallback, useRef, useContext } from "react";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import appStore from "../utils/appStore";
 import api from "../utils/api";
+import { setCart } from "../utils/cartSlice";
+
+function CartSyncManager() {
+  const dispatch = useDispatch();
+  const cart = useSelector((store) => store.cart);
+  const { user } = useContext(UserContext);
+  const isInitialSync = useRef(true);
+
+  // Load cart from server on mount / user login
+  useEffect(() => {
+    if (!user) return;
+
+    api
+      .get("/api/cart")
+      .then((res) => {
+        const serverCart = res.data?.data;
+        if (serverCart && serverCart.items && serverCart.items.length > 0) {
+          dispatch(setCart(serverCart));
+        } else if (cart.items.length > 0) {
+          api.put("/api/cart", cart).catch(() => {});
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        isInitialSync.current = false;
+      });
+  }, [user?.id, dispatch]);
+
+  // Sync cart to server on state updates
+  useEffect(() => {
+    if (!user || isInitialSync.current) return;
+
+    const timer = setTimeout(() => {
+      api.put("/api/cart", cart).catch(() => {});
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [cart, user?.id]);
+
+  return null;
+}
 
 function AppLayout() {
   const isOnline = useOnlineStatus();
@@ -84,7 +125,7 @@ function AppLayout() {
         }
       })
       .catch(() => {
-        // Interceptor already handles refresh failure
+        // Interceptor handles refresh failure
       });
 
     const handleAuthLogout = () => {
@@ -111,6 +152,7 @@ function AppLayout() {
           logout,
         }}
       >
+        <CartSyncManager />
         <div className="app">
           <Header isOnline={isOnline} />
           {isOnline ? (

@@ -2,12 +2,19 @@ import { CDN_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 
-const ItemList = ({ data: itemList }) => {
+const ItemList = ({ data: itemList, restaurantInfo }) => {
     const dispatch = useDispatch();
 
     const handleAddBtn = (item) => {
-        // Dispatch an action
-        dispatch(addItem(item));
+        // Dispatch an action with item and restaurant context
+        dispatch(
+            addItem({
+                item,
+                restaurantId: restaurantInfo?.id || restaurantInfo?._id,
+                restaurantName: restaurantInfo?.name,
+                restaurantLocation: restaurantInfo?.location,
+            })
+        );
     };
 
     const getPrice = (info) => {

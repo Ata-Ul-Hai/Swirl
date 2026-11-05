@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import restaurantRoutes from "./routes/restaurant.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
+import orderRoutes from "./routes/order.routes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { ApiError } from "./utils/ApiError.js";
 
@@ -23,9 +25,11 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-// Routes
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Catch-all for undefined routes
 app.use((req, res, next) => {

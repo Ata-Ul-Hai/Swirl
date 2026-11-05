@@ -70,6 +70,7 @@ const RestaurantMenu = () => {
                         <RestaurantCategory
                             key={category?.card?.card.title}
                             data={category?.card?.card}
+                            restaurantInfo={restaurantInfo}
                             showItems={showIndex === index}
                             setShowIndex={() => setShowIndex(index)}
                             resetIndex={() => setShowIndex(null)}
